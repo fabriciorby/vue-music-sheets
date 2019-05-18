@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "abcjs": "^5.6.11",
     "core-js": "^2.6.5",
+    "tonal": "^2.2.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {
