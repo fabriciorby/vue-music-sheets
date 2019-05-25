@@ -14,6 +14,7 @@
     "core-js": "^2.6.5",
     "font-awesome": "^4.7.0",
     "tonal": "^2.2.2",
+    "tonal-abc-notation": "^2.2.2",
     "vue": "^2.6.10"
   },
   "devDependencies": {

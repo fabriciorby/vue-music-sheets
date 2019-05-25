@@ -1,16 +1,18 @@
 <template>
   <div class="hello">
     <Tonal/>
-    <h1>Escala de {{notas[render]}}</h1>
     <Partitura :tune="template" :key="template"/>
     <section class="opcoes">
-        <select>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="vw">VW</option>
-            <option value="audi" selected>Audi</option>
+        <select v-model="tom">
+            <option v-for="(item, key) in notas" :value="item" v-bind:key="key">
+                {{item}}
+            </option>
         </select>
-        <button id="scale" v-on:click="render += 1">Mudar Escala</button>
+        <select v-model="modo">
+            <option v-for="(item, key) in modos" :value="item" v-bind:key="key">
+                {{item}}
+            </option>
+        </select>
         <button v-on:click="template = tune[1]">Mudar música</button>
     </section>
   </div>
@@ -19,7 +21,8 @@
 <script>
 import Partitura from './Partitura.vue'
 import Tonal from './Tonal.vue'
-import { Scale } from "tonal";
+import { Scale, Note, transpose } from "tonal";
+const Abc = require("tonal-abc-notation")
 import tune from '../assets/tune.js'
 
 const notas = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
@@ -31,50 +34,33 @@ export default {
     Tonal
   },
   mounted: function() {
-    this.template = this.tune[0].replace("nome", "Escala de " + notas[this.render]) +
-                    this.getScaleTemplate(notas[this.render]);
+    this.template = this.getScaleTemplate(this.tom, this.modo);
   },
   data() {
     return {
-      render: 0,
       tune: tune,
       template: "",
-      notas: notas
+      notas: notas,
+      modos: Scale.names(),
+      tom: 'C',
+      modo: 'major'
     }
   },
   watch: {
-    render: function(newRender, oldRender){
-      if (newRender == 7) {
-        this.render = 0;
-      }
-      this.template = this.tune[0].replace("nome", "Escala de " + notas[this.render]) +
-                      this.getScaleTemplate(notas[this.render]);
+    tom: function(newTom, oldTom){
+      this.template = this.getScaleTemplate(newTom, this.modo);
+    },
+    modo: function(newModo, oldModo){
+      this.template = this.getScaleTemplate(this.tom, newModo);
     }
   },
   methods: {
-    getScaleTemplate(tom) {
-      const menorNota = notas.indexOf(tom);
-      let scale = Scale.notes(tom + ' major')
-      .map((t, i) => {
-        if (t.endsWith("#")) {
-          return "^" + t.charAt(0);
-        } else if (t.endsWith("b")) {
-          return "_" + t.charAt(0);
-        } else {
-          return t;
-        }
-      })
-      .map((t, i) => {
-        let charTom = t.length < 2 ? 0 : 1;
-        if (notas.indexOf(t.charAt(charTom)) < menorNota) {
-          return t.toLowerCase();
-        } else {
-          return t;
-        }
-      })
-      .map(t => t + "2");
-      scale.push(scale[0].toLowerCase());
-      return this.getTemplate(scale);
+    getScaleTemplate(tom, modo) {
+      const menorNota = tom + '4';
+      let scale = Scale.notes(menorNota, modo).map(Abc.toAbc);
+      scale.push(Abc.toAbc(transpose(menorNota, "8M")));
+      const scaleMinima = scale.map(t => t + "2");
+      return this.tune[0].replace("nome", modo + " scale in " + tom) + this.getTemplate(scaleMinima);
     },
     getTemplate(scale) {
       const first = scale.slice(0, 4);
