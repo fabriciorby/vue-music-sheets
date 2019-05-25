@@ -51,7 +51,8 @@ export default {
         generateDownload: false,
         downloadLabel: '<i class="fa fa-external-link-alt" aria-hidden="true"></i> Download "%T"',
         visualTranspose: 0,
-        midiTranspose: 0
+        midiTranspose: 0,
+        staffwidth: 500
       }
     });
 
