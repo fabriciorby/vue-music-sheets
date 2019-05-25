@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <Partitura/>
+    <Principal/>
   </div>
 </template>
 
 <script>
-import Partitura from './components/Partitura.vue'
+import Principal from './components/Principal.vue'
 
 export default {
   name: 'app',
   components: {
-    Partitura
+    Principal
   }
 }
 </script>
