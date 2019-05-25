@@ -48,8 +48,10 @@ export default {
         responsive: "resize",
         generateInline: true,
         viewportHorizontal: true,
-        generateDownload: true,
-				downloadLabel: '<i class="fa fa-external-link-alt" aria-hidden="true"></i> Download "%T"',
+        generateDownload: false,
+        downloadLabel: '<i class="fa fa-external-link-alt" aria-hidden="true"></i> Download "%T"',
+        visualTranspose: 0,
+        midiTranspose: 0
       }
     });
 

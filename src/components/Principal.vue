@@ -1,9 +1,18 @@
 <template>
   <div class="hello">
     <Tonal/>
+    <h1>Escala de {{notas[render]}}</h1>
     <Partitura :tune="template" :key="template"/>
-    <p>Escala atual: {{notas[render]}}</p>
-    <button id="scale" v-on:click="render += 1">Mudar Escala</button>
+    <section class="opcoes">
+        <select>
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="vw">VW</option>
+            <option value="audi" selected>Audi</option>
+        </select>
+        <button id="scale" v-on:click="render += 1">Mudar Escala</button>
+        <button v-on:click="template = tune[1]">Mudar música</button>
+    </section>
   </div>
 </template>
 
@@ -22,12 +31,13 @@ export default {
     Tonal
   },
   mounted: function() {
-    this.template = this.tune + this.getScaleTemplate(notas[this.render]);
+    this.template = this.tune[0].replace("nome", "Escala de " + notas[this.render]) +
+                    this.getScaleTemplate(notas[this.render]);
   },
   data() {
     return {
       render: 0,
-      tune: tune[0],
+      tune: tune,
       template: "",
       notas: notas
     }
@@ -37,7 +47,8 @@ export default {
       if (newRender == 7) {
         this.render = 0;
       }
-      this.template = this.tune + this.getScaleTemplate(notas[this.render])
+      this.template = this.tune[0].replace("nome", "Escala de " + notas[this.render]) +
+                      this.getScaleTemplate(notas[this.render]);
     }
   },
   methods: {
@@ -68,13 +79,21 @@ export default {
     getTemplate(scale) {
       const first = scale.slice(0, 4);
       const last = scale.slice(4, 8);
-      let template = ["|", first, "|", last, "|]"];
-      return template.flatMap(t => t).join(" ");
+      const template = ["|", first, "|", last, "|]"].flatMap(t => t).join(" ");
+      return template;
     }
   }
 }
 </script>
 
 <style scoped>
+
+h1 {
+    margin-bottom: 0;
+}
+
+.opcoes {
+    margin: 15px;
+}
 
 </style>
