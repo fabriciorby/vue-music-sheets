@@ -1,8 +1,7 @@
 <template>
-  <div class="hello">
-    <h1>Vue Midi abcjs Demo</h1>
-    <textarea id="abc-source" v-model="tune"></textarea>
-    <div class="listener-output">
+  <div class="content">
+    <textarea id="abc-source" v-model="tune" class="hidden"></textarea>
+    <div class="listener-output hidden">
       <div class="label">
         Currently Playing:
         <span class="abc-string">{{currentAbcFragment}}</span>
@@ -26,6 +25,7 @@ import abcjs from "abcjs/midi";
 
 export default {
   mounted: function() {
+    //abcjs.midi.setSoundFont(url);
     new abcjs.Editor("abc-source", {
       canvas_id: "paper",
       generate_midi: true,
@@ -34,7 +34,10 @@ export default {
         midiListener: this.listener,
         animate: {
           listener: this.animate
-        }
+        },
+        oneSvgPerLine: true,
+        //responsive: "resize",
+				generateInline: true
       }
     });
   },
@@ -77,7 +80,7 @@ export default {
 </script>
 
 <style>
-.hello {
+.content {
   text-align: center;
 }
 
@@ -118,5 +121,9 @@ pre {
 
 .label {
   font-weight: bold;
+}
+
+.hidden {
+  display: none;
 }
 </style>
