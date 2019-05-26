@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <Tonal/>
     <Partitura :tune="template" :key="template" v-on:nota-atual="getNotaAtual"/>
     <h1>Nota Atual: {{notaAtual}}</h1>

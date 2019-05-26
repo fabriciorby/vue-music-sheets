@@ -31,8 +31,11 @@ export default {
     tune: String
   },
   mounted: function() {
-    if (config.partitura.soundFount)
-      abcjs.midi.setSoundFont(config.partitura.soundFount);
+    if (typeof webpackHotUpdate !== 'undefined'){
+        abcjs.midi.setSoundFont(config.partitura.soundFont);
+    } else {
+        abcjs.midi.setSoundFont("./midi/");
+    }
     
     new abcjs.Editor("abc-source", {
       canvas_id: "paper",
@@ -140,7 +143,7 @@ pre {
 }
 
 #midi {
-  width: 756px;
+  width: 70% !important;
   margin: auto;
 }
 
