@@ -10,8 +10,8 @@ const Abc = require("tonal-abc-notation")
 
 export default {
   mounted: function() {
-    console.log(Scale.notes('D4 major').map(Abc.toAbc));
-    console.log(transpose("d3", "8M"));
+    // console.log(Scale.notes('D4 major').map(Abc.toAbc));
+    // console.log(transpose("d3", "8M"));
   },
   name: "Tonal",
   data() {

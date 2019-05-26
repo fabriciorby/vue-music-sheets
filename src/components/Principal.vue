@@ -71,6 +71,7 @@ export default {
       return template;
     },
     getNotaAtual(abcNote) {
+      console.log(abcNote.trim());
       abcNote = abcNote.trim();
       abcNote = abcNote.substring(0, abcNote.length - 1);
       // TODO regex para todos os comprimentos de nota
