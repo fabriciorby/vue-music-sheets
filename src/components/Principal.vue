@@ -1,7 +1,8 @@
 <template>
   <div class="hello">
     <Tonal/>
-    <Partitura :tune="template" :key="template"/>
+    <Partitura :tune="template" :key="template" v-on:nota-atual="getNotaAtual"/>
+    <h1>Nota Atual: {{notaAtual}}</h1>
     <section class="opcoes">
       <select v-model="tom">
         <option v-for="(item, key) in notas" :value="item" v-bind:key="key">{{item}}</option>
@@ -39,7 +40,8 @@ export default {
       notas: notas,
       modos: Scale.names(),
       tom: "C",
-      modo: "major"
+      modo: "major",
+      notaAtual: ""
     };
   },
   watch: {
@@ -62,10 +64,18 @@ export default {
       );
     },
     getTemplate(scale) {
+      // TODO arrumar caso a escala tenha mais de 8 notas
       const first = scale.slice(0, 4);
       const last = scale.slice(4, 8);
       const template = ["|", first, "|", last, "|]"].flatMap(t => t).join(" ");
       return template;
+    },
+    getNotaAtual(abcNote) {
+      abcNote = abcNote.trim();
+      abcNote = abcNote.substring(0, abcNote.length - 1);
+      // TODO regex para todos os comprimentos de nota
+      // http://abcnotation.com/blog/2010/01/31/how-to-understand-abc-the-basics/
+      this.notaAtual = Abc.toNote(abcNote);
     }
   }
 };

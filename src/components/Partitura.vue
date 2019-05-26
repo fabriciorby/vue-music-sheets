@@ -41,6 +41,7 @@ export default {
       midi_download_id: "midi-download",
       abcjsParams: {
         midiListener: this.listener,
+        clickListener: this.clickListener,
         animate: {
           listener: this.animate
         },
@@ -88,6 +89,16 @@ export default {
           currentRange.endChar
         );
       else this.currentAbcFragment = "(none)";
+    },
+    clickListener(abcElem, tuneNumber, classes) {
+        const notaAtual = this.tune.slice(abcElem.startChar, abcElem.endChar);
+        this.$emit('nota-atual', notaAtual);
+    }
+  },
+  watch: {
+    currentAbcFragment: function(newVal, oldVal) {
+        if (newVal.length < 5)
+            this.$emit('nota-atual', newVal);
     }
   }
 };
