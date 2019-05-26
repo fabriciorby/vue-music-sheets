@@ -1,5 +1,5 @@
 {
     "partitura" : {
-        "soundFont" : "http://localhost:8081/FluidR3_GM/"
+        "soundFont" : "https://fabriciorby.me/music-scales/midi/"
     }
 }
