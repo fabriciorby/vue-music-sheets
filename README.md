@@ -1,5 +1,8 @@
 # vue-music-sheets
 
+## Check the website
+https://fabriciorby.me/music-scales/
+
 ## Project setup
 ```
 npm install
